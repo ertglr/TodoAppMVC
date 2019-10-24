@@ -1,0 +1,17 @@
+﻿.body-content {
+    padding-top: 60px;
+}
+
+.login-box {
+    box-shadow: 0 0 5px #28a745;
+    border: 1px solid #ddd;
+    transition: all 0.5s;
+}
+
+    .login-box:hover {
+        -moz-transform: scale(1.2);
+        -webkit-transform: scale(1.2);
+        -o-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+    }

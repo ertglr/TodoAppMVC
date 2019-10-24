@@ -1,0 +1,77 @@
+﻿@model TodoApp.ENTITIES.EntityClass.User
+@{
+    ViewBag.Title = "Kayıt Ol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="alert-info">
+    <p>Kayıt sayfamıza hoşgeldiniz. Lütfen istenilen bilgileri doğru ve eksiksiz doldurduğunuzdan emin olunuz.</p>
+</div>
+
+<div class="row my-5">
+    <div class=" col-sm-4 offset-4 login-box p-5">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group row">
+                @Html.LabelFor(i => i.Firstname, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(i => i.Firstname, null, new { @class = "form-control", @placeholder = "İsminizi giriniz..." })
+                    @Html.ValidationMessageFor(i => i.Firstname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(i => i.Lastname, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(i => i.Lastname, null, new { @class = "form-control", @placeholder = "Soyadınızı giriniz..." })
+                    @Html.ValidationMessageFor(i => i.Lastname, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(i => i.Username, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(i => i.Username, null, new { @class = "form-control", @placeholder = "Username..." })
+                    @Html.ValidationMessageFor(i => i.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(i => i.ModifiedUser, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(i => i.ModifiedUser, null, new { @class = "form-control", @placeholder = "İsminizi giriniz..." })
+                    @Html.ValidationMessageFor(i => i.ModifiedUser, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(i => i.Email, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(i => i.Email, null, new { @class = "form-control", @placeholder = "mail@mail.com" })
+                    @Html.ValidationMessageFor(i => i.Email, "", new { @class = "text-danger" })
+                </div>
+            </div> <div class="form-group row">
+                @Html.LabelFor(i => i.Password, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.PasswordFor(i => i.Password, new { @class = "form-control", @placeholder = "Şifrenizi giriniz..." })
+                    @Html.ValidationMessageFor(i => i.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(i => i.ConfirmPassword, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.PasswordFor(i => i.ConfirmPassword, new { @class = "form-control", @placeholder = "Şifre tekrarı..." })
+                    @Html.ValidationMessageFor(i => i.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="submit" value="Giriş" class="btn btn-success btn-block" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

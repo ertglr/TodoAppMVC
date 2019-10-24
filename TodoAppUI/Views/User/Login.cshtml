@@ -1,0 +1,37 @@
+﻿@model TodoApp.ENTITIES.EntityClass.User
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-center my-3">
+    <div class="col-sm-12">
+        <h2 class="display-4">Kayıt sayfasına hoşgeldiniz...</h2>
+    </div>
+</div>
+<div class="row my-5">
+    <div class=" col-sm-4 offset-4 login-box p-5">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group row">
+                @Html.LabelFor(i => i.Email, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(i => i.Email, null, new { @class = "form-control", @placeholder = "mail@mail.com" })
+                    @Html.ValidationMessageFor(i => i.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(i => i.Password, new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.PasswordFor(i => i.Password, new { @class = "form-control", @placeholder = "Şifrenizi giriniz..." })
+                    @Html.ValidationMessageFor(i => i.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="submit" value="Giriş" class="btn btn-success btn-block" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

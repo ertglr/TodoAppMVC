@@ -1,0 +1,70 @@
+﻿@model TodoApp.ENTITIES.EntityClass.Task
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (ViewBag.Error!=null)
+{
+    <div class="alert">@ViewBag.Error</div>
+}
+
+
+    <div class="row my-5">
+        <div class=" col-sm-4 offset-4 login-box p-5">
+            @using (Html.BeginForm())
+            {
+                <div class="form-group row">
+                    @Html.LabelFor(i => i.Owner, new { @class = "col-sm-3 col-form-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(i => i.Owner.Username, null, new { @class = "form-control", @placeholder = "Kullanıcı adı giriniz..." })
+                        @Html.ValidationMessageFor(i => i.Owner, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(i => i.Text, new { @class = "col-sm-3 col-form-label" })
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(i => i.Text, new { @class = "form-control", @placeholder = "Görevi tanımlayınız..." })
+                        @Html.ValidationMessageFor(i => i.Text, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group row">
+
+            <div class="col-sm-9">*@
+                @*@Html.HiddenFor(i => i.CreatedOn)*@
+                @*@Html.HiddenFor(i => i.ModifiedUser, new { ModifiedUser = $"{Model.Owner.Firstname + " " + Model.Owner.Lastname}" })
+                @Html.HiddenFor(i => i.ModifiedOn, new { ModifiedOn = DateTime.Now })*@
+                
+
+                @*</div>
+
+            </div>*@
+
+                <div class="form-group row">
+                    @Html.Label("Görev Tamamlandı Mı?", new { @class = "col-sm-5 col-form-label" })
+                    <div class="col-sm-7">
+                        @Html.CheckBoxFor(i => i.IsComleted)
+                        @Html.ValidationMessageFor(i => i.Text, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                if (Model.IsComleted==true)
+                {
+                    Html.HiddenFor(i => i.DueDate, new { DueDate = DateTime.Now });
+                }
+               
+
+
+
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <input type="submit" value="Güncelle" class="btn btn-success btn-block" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
