@@ -25,6 +25,7 @@
             foreach (var item in Model)
             {
                 <tr>
+                  
                     <td><input type="checkbox" name="IsCompleted" checked="@item.IsComleted" /> </td>
                     <td>@item.Text</td>
                     <td>@item.CreatedOn.Value.ToShortDateString()</td>

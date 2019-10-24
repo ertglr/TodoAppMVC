@@ -19,20 +19,21 @@ namespace TodoAppUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(User user)
+        public ActionResult Login(string Email, string Password)
         {
             try
             {
-                if (db.Users.Any(i => i.Email == user.Email && i.Password == user.Password))
+                if (db.Users.Any(i => i.Email == Email && i.Password == Password))
                 {
-                    var model = db.Users.FirstOrDefault(i=>i.Email==user.Email);
-                    
-                    return RedirectToAction("Index",model);
+                    var user = db.Users.FirstOrDefault(i => i.Email ==Email);
+                    //var task = db.Tasks.FirstOrDefault(i=>i.Owner.ID==user.ID);
+                    Session.Add("user", user.ID);
+
+                    return RedirectToAction("Index");
                 }
-                else
-                {
+                
                     return View();
-                }
+                
             }
             catch (Exception e)
             {
@@ -72,11 +73,13 @@ namespace TodoAppUI.Controllers
             
         }
 
-        public ActionResult Index(User user)
+        public ActionResult Index()
         {
             try
             {
-                var tasks = db.Tasks.Where(i => i.Owner.ID == user.ID).ToList();
+                var user = Session["user"];
+                
+                var tasks = db.Tasks.Where(i => i.Owner.ID==(Guid)user).ToList();
                 return View(tasks);
             }
             catch (Exception e)

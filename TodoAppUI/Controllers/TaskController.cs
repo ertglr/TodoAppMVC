@@ -22,26 +22,26 @@ namespace TodoAppUI.Controllers
         {
             try
             {
-                var owner = db.Users.FirstOrDefault(i => i.ModifiedUser == task.ModifiedUser);
+
+                var owner = Session["user"];
                 task.CreatedOn = DateTime.Now.Date;
-                task.IsComleted = false;
-                task.Owner = owner;
+                task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner);
+                //task.ID = Guid.NewGuid();
                 db.Tasks.Add(task);
-                if (db.SaveChanges()>0)
+                if (db.SaveChanges() > 0)
                 {
-                    return RedirectToAction("Index", "User",task);
+                    return RedirectToAction("Index", "User");
                 }
-                else
-                {
-                    return View(task);
-                }
+
+                return View(task);
+
             }
             catch (Exception e)
             {
 
                 throw new Exception(e.Message);
             }
-           
+
         }
 
 
@@ -58,7 +58,7 @@ namespace TodoAppUI.Controllers
 
                 throw new Exception(e.Message);
             }
-            
+
         }
 
         [HttpPost] //modified User'ı username olarak alıyor
@@ -66,18 +66,50 @@ namespace TodoAppUI.Controllers
         {
             try
             {
-                var user = db.Users.FirstOrDefault(i => i.Username == task.Owner.Username);
-                task.Owner = user;
-                    db.Entry(task).State = System.Data.Entity.EntityState.Modified;
-                    return RedirectToAction("Index", "User", task);
-                
-               
+                var user = Session["user"];
+                var newTask = new Task();
+                newTask.ID = task.ID;
+                newTask.IsComleted = task.IsComleted;
+                newTask.ModifiedOn = DateTime.Now;
+                newTask.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)user);
+                newTask.Text = task.Text;
+                newTask.CreatedOn = task.CreatedOn;
+                newTask.ModifiedUser = task.ModifiedUser;
+                if (newTask.IsComleted)
+                {
+                    newTask.DueDate = DateTime.Now;
+                }
+
+                if (db.SaveChanges() > 0)
+                {
+                    return RedirectToAction("Index", "User");
+
+                }
+
+                return View(task);
+
             }
             catch (Exception e)
             {
                 ViewBag.Error = e.Message;
                 return View();
-                
+
+            }
+        }
+
+        public ActionResult Delete(Guid ID)
+        {
+            try
+            {
+                var task = db.Tasks.Find(ID);
+                db.Tasks.Remove(task);
+                db.SaveChanges();
+                return RedirectToAction("Index", "User");
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
             }
         }
 
