@@ -5,8 +5,15 @@
 
 <div class="col-md-12"><h2>Görevler</h2></div>
 <div class="row">
-    @Html.ActionLink("Yeni Görev Ekle", "NewTask", "Task",null, new { @class = "btn btn-primary" })
+    @Ajax.ActionLink("Yeni Görev Ekle", "NewTask", "Task",null,new AjaxOptions() { HttpMethod="Get", LoadingElementId="loading",LoadingElementDuration=300, UpdateTargetId="form",InsertionMode=InsertionMode.InsertAfter}, new { @class = "btn btn-primary" })
 </div>
+
+
+    <div id="form" class="form">
+        <div id="loading" class="alert-secondary" style="display:none">Yükleniyor...</div>
+
+    </div>
+
 
 
 <table class="table table-hover">
@@ -24,7 +31,7 @@
         {
             foreach (var item in Model)
             {
-                <tr>
+                <tr id="list">
                   
                     <td><input type="checkbox" name="IsCompleted" checked="@item.IsComleted" /> </td>
                     <td>@item.Text</td>

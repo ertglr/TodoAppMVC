@@ -15,7 +15,7 @@
         <div class=" col-sm-4 offset-4 login-box p-5">
             @using (Html.BeginForm())
             {
-                
+                @Html.HiddenFor(i=>i.CreatedOn)
                 <div class="form-group row">
                     @Html.LabelFor(i => i.Owner, new { @class = "col-sm-3 col-form-label" })
                     <div class="col-sm-9">

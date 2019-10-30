@@ -5,27 +5,30 @@ using System.Web;
 using System.Web.Mvc;
 using TodoApp.DAL.Context;
 using TodoApp.ENTITIES.EntityClass;
+using TodoAppUI.Filters;
 
 namespace TodoAppUI.Controllers
 {
+    [AuthFilter]
     public class TaskController : Controller
     {
         TodoContext db = new TodoContext();
 
         [HttpGet]
-        public ActionResult NewTask()
+        public PartialViewResult NewTask()
         {
-            return View();
+            System.Threading.Thread.Sleep(1500);
+            return PartialView("_NewTaskPartialView",new Task());
         }
-        [HttpPost]
+        [HttpPost] //todo:ajax.beginformdan gelecek veri için düzenleme yapılacak..
         public ActionResult NewTask(Task task)
         {
             try
             {
 
-                var owner = Session["user"];
+                var owner = Session["user"] as User;
                 task.CreatedOn = DateTime.Now.Date;
-                task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner);
+                task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner.ID);
                 //task.ID = Guid.NewGuid();
                 db.Tasks.Add(task);
                 if (db.SaveChanges() > 0)
@@ -61,24 +64,27 @@ namespace TodoAppUI.Controllers
 
         }
 
-        [HttpPost] //modified User'ı username olarak alıyor
+        [HttpPost]
         public ActionResult Edit(Task task)
         {
             try
             {
-                var user = Session["user"];
-                var newTask = new Task();
-                newTask.ID = task.ID;
-                newTask.IsComleted = task.IsComleted;
-                newTask.ModifiedOn = DateTime.Now;
-                newTask.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)user);
-                newTask.Text = task.Text;
-                newTask.CreatedOn = task.CreatedOn;
-                newTask.ModifiedUser = task.ModifiedUser;
-                if (newTask.IsComleted)
+                var user = Session["user"] as User;
+                //var newTask = new Task();
+                //newTask.ID = task.ID;
+                //newTask.IsComleted = task.IsComleted;
+                //newTask.ModifiedOn = DateTime.Now;
+                //newTask.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)user.ID);
+                //newTask.Text = task.Text;
+                //newTask.CreatedOn = task.CreatedOn;
+                //newTask.ModifiedUser = task.ModifiedUser;
+                task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)user.ID);
+                if (task.IsComleted)
                 {
-                    newTask.DueDate = DateTime.Now;
+                    task.DueDate = DateTime.Now;
                 }
+
+                db.Entry(task).State = System.Data.Entity.EntityState.Modified;
 
                 if (db.SaveChanges() > 0)
                 {

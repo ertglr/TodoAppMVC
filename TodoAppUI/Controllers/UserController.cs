@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using TodoApp.DAL.Context;
 using TodoApp.ENTITIES.EntityClass;
+using TodoAppUI.Filters;
 
 namespace TodoAppUI.Controllers
 {
+    
     public class UserController : Controller
     {
         TodoContext db = new TodoContext();
@@ -27,7 +29,7 @@ namespace TodoAppUI.Controllers
                 {
                     var user = db.Users.FirstOrDefault(i => i.Email ==Email);
                     //var task = db.Tasks.FirstOrDefault(i=>i.Owner.ID==user.ID);
-                    Session.Add("user", user.ID);
+                    Session.Add("user", user);
 
                     return RedirectToAction("Index");
                 }
@@ -72,14 +74,14 @@ namespace TodoAppUI.Controllers
             }
             
         }
-
+        [AuthFilter]
         public ActionResult Index()
         {
             try
             {
-                var user = Session["user"];
+                var user = Session["user"] as User;
                 
-                var tasks = db.Tasks.Where(i => i.Owner.ID==(Guid)user).ToList();
+                var tasks = db.Tasks.Where(i => i.Owner.ID==(Guid)user.ID).ToList();
                 return View(tasks);
             }
             catch (Exception e)
