@@ -12,6 +12,7 @@ namespace TodoApp.BLL
         public Test()
         {
             // test
+            // test 2
             TodoContext db = new TodoContext();
             db.Users.ToList();
         }
