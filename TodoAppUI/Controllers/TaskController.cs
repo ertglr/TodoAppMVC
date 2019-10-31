@@ -18,7 +18,7 @@ namespace TodoAppUI.Controllers
         public PartialViewResult NewTask()
         {
             System.Threading.Thread.Sleep(1500);
-            return PartialView("_NewTaskPartialView",new Task());
+            return PartialView("_PostingTaskPartialView", new Task());
         }
         [HttpPost] //todo:ajax.beginformdan gelecek veri için düzenleme yapılacak..
         public ActionResult NewTask(Task task)
@@ -70,15 +70,8 @@ namespace TodoAppUI.Controllers
             try
             {
                 var user = Session["user"] as User;
-                //var newTask = new Task();
-                //newTask.ID = task.ID;
-                //newTask.IsComleted = task.IsComleted;
-                //newTask.ModifiedOn = DateTime.Now;
-                //newTask.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)user.ID);
-                //newTask.Text = task.Text;
-                //newTask.CreatedOn = task.CreatedOn;
-                //newTask.ModifiedUser = task.ModifiedUser;
                 task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)user.ID);
+                task.ModifiedUser = task.Owner.ModifiedUser;
                 if (task.IsComleted)
                 {
                     task.DueDate = DateTime.Now;
