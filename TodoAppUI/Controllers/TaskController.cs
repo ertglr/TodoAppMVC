@@ -29,7 +29,7 @@ namespace TodoAppUI.Controllers
                 var owner = Session["user"] as User;
                 task.CreatedOn = DateTime.Now.Date;
                 task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner.ID);
-                //task.ID = Guid.NewGuid();
+                task.ModifiedUser = task.Owner.ModifiedUser;
                 db.Tasks.Add(task);
                 if (db.SaveChanges() > 0)
                 {
