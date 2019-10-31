@@ -91,12 +91,34 @@ namespace TodoAppUI.Controllers
             }
         }
 
+        [HttpPost]
+        public PartialViewResult Index(Task task)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var owner = Session["user"] as User;
+                    task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner.ID);
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                    return PartialView("_NewTaskPartialView");
+                }
+                return PartialView(task);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
 
 
-        //public ActionResult Register()
+        //public ActionResult Deneme()
         //{
-
+        //    return RedirectToAction()
         //}
+        
 
 
     }
