@@ -177,6 +177,7 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Task\NewTask.cshtml" />
     <Content Include="Views\Task\Edit.cshtml" />
+    <Content Include="Views\Shared\_PostingTaskPartialView.cshtml" />
     <Content Include="Views\Shared\_NewTaskPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

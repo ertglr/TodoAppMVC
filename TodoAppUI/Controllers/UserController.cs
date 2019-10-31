@@ -9,7 +9,7 @@ using TodoAppUI.Filters;
 
 namespace TodoAppUI.Controllers
 {
-    
+
     public class UserController : Controller
     {
         TodoContext db = new TodoContext();
@@ -27,15 +27,15 @@ namespace TodoAppUI.Controllers
             {
                 if (db.Users.Any(i => i.Email == Email && i.Password == Password))
                 {
-                    var user = db.Users.FirstOrDefault(i => i.Email ==Email);
+                    var user = db.Users.FirstOrDefault(i => i.Email == Email);
                     //var task = db.Tasks.FirstOrDefault(i=>i.Owner.ID==user.ID);
                     Session.Add("user", user);
 
                     return RedirectToAction("Index");
                 }
-                
-                    return View();
-                
+
+                return View();
+
             }
             catch (Exception e)
             {
@@ -56,23 +56,28 @@ namespace TodoAppUI.Controllers
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    db.Users.Add(user);
+                    if (db.SaveChanges() > 0)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return View(user);
+                    }
+                }
+
+                else return View();
                
-                db.Users.Add(user);
-                if (db.SaveChanges()>0)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return View(user);
-                }
             }
             catch (Exception e)
             {
 
                 throw new Exception(e.Message);
             }
-            
+
         }
         [AuthFilter]
         public ActionResult Index()
@@ -80,8 +85,8 @@ namespace TodoAppUI.Controllers
             try
             {
                 var user = Session["user"] as User;
-                
-                var tasks = db.Tasks.Where(i => i.Owner.ID==(Guid)user.ID).ToList();
+
+                var tasks = db.Tasks.Where(i => i.Owner.ID == (Guid)user.ID).ToList();
                 return View(tasks);
             }
             catch (Exception e)
@@ -91,12 +96,33 @@ namespace TodoAppUI.Controllers
             }
         }
 
+        [HttpPost]
+        public PartialViewResult Index(Task task)
+        {
+            try
+            {
+
+                var owner = Session["user"] as User;
+                task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner.ID);
+                task.ModifiedUser = task.Owner.ModifiedUser;
+                db.Tasks.Add(task);
+                if (db.SaveChanges()>0)
+                {
+                    return PartialView("_NewTaskPartialView");
+                }
+                
+                
+
+                return PartialView(task);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
 
 
-        //public ActionResult Register()
-        //{
-
-        //}
 
 
     }

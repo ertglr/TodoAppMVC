@@ -16,13 +16,7 @@
             @using (Html.BeginForm())
             {
                 @Html.HiddenFor(i=>i.CreatedOn)
-                <div class="form-group row">
-                    @*@Html.LabelFor(i => i.Owner, new { @class = "col-sm-3 col-form-label" })
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(i => i.ModifiedUser, null, new { @class = "form-control", @placeholder = "Kullanıcı adı giriniz..." })
-                        @Html.ValidationMessageFor(i => i.Owner, "", new { @class = "text-danger" })
-                    </div>*@
-                </div>
+               
 
                 <div class="form-group row">
                     @Html.LabelFor(i => i.Text, new { @class = "col-sm-3 col-form-label" })
