@@ -26,6 +26,7 @@ namespace TodoAppUI.Controllers
         {
             try
             {
+                
                 var userLogin = db.Users.FirstOrDefault(i => i.Email == user.Email && i.Password == user.Password);
 
                 if (userLogin == null)
