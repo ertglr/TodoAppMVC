@@ -6,8 +6,12 @@
 
 <div class="row my-5">
     <div class=" col-sm-4 offset-4 login-box p-5">
-        @using (Ajax.BeginForm("NewTask",new { Owner=Model.Owner},new AjaxOptions() { HttpMethod="Post", LoadingElementId="loading", LoadingElementDuration=300, InsertionMode=InsertionMode.InsertAfter, UpdateTargetId="list"}))
+        @using (Ajax.BeginForm("NewTask", new { Owner = Model.Owner }, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "loading", LoadingElementDuration = 300, InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "list" }))
         {
+
+            <div class="form-group">
+                <a href="/User/Index" class="close">x</a>
+            </div>
 
             <div class="form-group row">
                 @Html.LabelFor(i => i.Text, new { @class = "col-sm-4 col-form-label" })
@@ -16,7 +20,7 @@
                     @Html.ValidationMessageFor(i => i.Text, "", new { @class = "text-danger" })
                 </div>
             </div>
-          
+
 
             <div class="form-group row">
                 <div class="col-sm-12">
