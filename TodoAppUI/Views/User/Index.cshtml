@@ -44,9 +44,13 @@
                             {
                                 <td>@item.DueDate.Value.ToShortDateString()</td>
 
+                        @Html.ActionLink("Delete", "Delete","Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs",onclick="return confirm('Gerçekten Silmek İstiyor Musunuz?')"})
+                    </td>
+                </tr>
                             }
                             <td>
                                 @Html.ActionLink("Düzenle", "Edit", "Task", new { id = item.ID }, new { @class = "btn btn-success btn-xs" }) |
+
 
                                 @Html.ActionLink("Delete", "Delete", "Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
                             </td>
