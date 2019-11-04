@@ -1,0 +1,10 @@
+﻿@model Exception
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>Bir hata oluştu...</h2>
+    <p>@Model.Message</p>
+</div>
