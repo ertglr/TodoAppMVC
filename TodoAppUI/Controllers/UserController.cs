@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using TodoApp.DAL.Context;
 using TodoApp.ENTITIES.EntityClass;
 using TodoAppUI.Filters;
+using TodoAppUI.Models;
 
 namespace TodoAppUI.Controllers
 {
-    
+
     public class UserController : Controller
     {
         TodoContext db = new TodoContext();
@@ -17,25 +18,42 @@ namespace TodoAppUI.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            return View(new User());
         }
 
         [HttpPost]
-        public ActionResult Login(string Email, string Password)
+        public ActionResult Login(UserVM user)
         {
             try
             {
-                if (db.Users.Any(i => i.Email == Email && i.Password == Password))
-                {
-                    var user = db.Users.FirstOrDefault(i => i.Email ==Email);
-                    //var task = db.Tasks.FirstOrDefault(i=>i.Owner.ID==user.ID);
-                    Session.Add("user", user);
+                
+                var userLogin = db.Users.FirstOrDefault(i => i.Email == user.Email && i.Password == user.Password);
 
-                    return RedirectToAction("Index");
+                if (userLogin == null)
+                {
+                    return View(userLogin);
                 }
-                
-                    return View();
-                
+
+               
+
+                if (ModelState.IsValid)
+                {
+                   
+                        
+                 
+                        Session.Add("user", userLogin);
+
+                        return RedirectToAction("Index");
+                    
+
+                }
+                else
+                {
+                    var errors = ModelState.Values.Select(i => i.Errors).ToList();
+                    return View(user);
+                }
+               
+
             }
             catch (Exception e)
             {
@@ -56,23 +74,28 @@ namespace TodoAppUI.Controllers
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    db.Users.Add(user);
+                    if (db.SaveChanges() > 0)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return View(user);
+                    }
+                }
+
+                else return View();
                
-                db.Users.Add(user);
-                if (db.SaveChanges()>0)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return View(user);
-                }
             }
             catch (Exception e)
             {
 
                 throw new Exception(e.Message);
             }
-            
+
         }
         [AuthFilter]
         public ActionResult Index()
@@ -80,8 +103,8 @@ namespace TodoAppUI.Controllers
             try
             {
                 var user = Session["user"] as User;
-                
-                var tasks = db.Tasks.Where(i => i.Owner.ID==(Guid)user.ID).ToList();
+
+                var tasks = db.Tasks.Where(i => i.Owner.ID == (Guid)user.ID).ToList();
                 return View(tasks);
             }
             catch (Exception e)
@@ -96,14 +119,18 @@ namespace TodoAppUI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+
+                var owner = Session["user"] as User;
+                task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner.ID);
+                task.ModifiedUser = task.Owner.ModifiedUser;
+                db.Tasks.Add(task);
+                if (db.SaveChanges()>0)
                 {
-                    var owner = Session["user"] as User;
-                    task.Owner = db.Users.FirstOrDefault(i => i.ID == (Guid)owner.ID);
-                    db.Tasks.Add(task);
-                    db.SaveChanges();
                     return PartialView("_NewTaskPartialView");
                 }
+                
+                
+
                 return PartialView(task);
             }
             catch (Exception e)
@@ -114,11 +141,6 @@ namespace TodoAppUI.Controllers
         }
 
 
-        //public ActionResult Deneme()
-        //{
-        //    return RedirectToAction()
-        //}
-        
 
 
     }
