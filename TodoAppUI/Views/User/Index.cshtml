@@ -15,6 +15,70 @@
     </div>
 
 
+
+
+<table class="table table-hover row">
+    <thead>
+        <tr>
+            <th>Tamamlandı Mı?</th>
+            <th>Görev</th>
+            <th>Oluşturulma Tarihi</th>
+            <th>Bitirme Tarihi</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="list">
+        @if (Model.Count != 0)
+        {
+            foreach (var item in Model)
+            {
+                if (item.IsComleted == true)
+                {
+                    <tr>
+
+                        <td><input type="checkbox" name="IsCompleted" checked="@item.IsComleted" /> </td>
+                        <td class="task text-secondary">@item.Text</td>
+                        <td class="task text-secondary">@item.CreatedOn.Value.ToShortDateString()</td>
+                        @if (item.DueDate == null)
+                        {
+                            <td>Görev henüz tamamlanmadı.</td>
+                        }
+                        else
+                        {
+                            <td class="task text-secondary">@item.DueDate.Value.ToShortDateString()</td>
+
+                        }
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", "Task", new { id = item.ID }, new { @class = "btn btn-success btn-xs" }) |
+
+                            @Html.ActionLink("Delete", "Delete", "Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?')" })
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+
+                        <td><input type="checkbox" name="IsCompleted" checked="@item.IsComleted" /> </td>
+                        <td>@item.Text</td>
+                        <td>@item.CreatedOn.Value.ToShortDateString()</td>
+                        @if (item.DueDate == null)
+                        {
+                            <td>Görev henüz tamamlanmadı.</td>
+                        }
+                        else
+                        {
+                            <td>@item.DueDate.Value.ToShortDateString()</td>
+
+                        }
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", "Task", new { id = item.ID }, new { @class = "btn btn-success btn-xs" }) |
+
+                            @Html.ActionLink("Delete", "Delete", "Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?')" })
+                        </td>
+                    </tr>
+                }
+
     <div class="row">
         <table class="table table-hover">
             <thead>
@@ -50,6 +114,7 @@
                             }
                             <td>
                                 @Html.ActionLink("Düzenle", "Edit", "Task", new { id = item.ID }, new { @class = "btn btn-success btn-xs" }) |
+
 
 
                                 @Html.ActionLink("Delete", "Delete", "Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })

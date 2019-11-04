@@ -41,6 +41,13 @@
   box-sizing: border-box;
 }
 
+/*custom css class*/
+
+.task{
+    text-decoration:line-through;
+
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
