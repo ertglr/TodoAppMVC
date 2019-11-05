@@ -2,7 +2,7 @@
 
 <div class="row my-5">
     <div class=" col-sm-4 offset-4 login-box p-5">
-        @using (Ajax.BeginForm("Index", "User", null, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "loading", UpdateTargetId = "list", LoadingElementDuration = 300, InsertionMode = InsertionMode.InsertAfter }))
+        @using (Ajax.BeginForm("NewTask", "Task", null, new AjaxOptions() { HttpMethod = "Post", LoadingElementId = "loading", UpdateTargetId = "list", LoadingElementDuration = 300, InsertionMode = InsertionMode.Replace }))
         {
 
             <div class="form-group">

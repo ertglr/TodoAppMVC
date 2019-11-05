@@ -5,14 +5,14 @@
 
 <div class="row align-items-center"><h2>Görevler</h2></div>
 <div class="row">
-    @Ajax.ActionLink("Yeni Görev Ekle", "NewTask", "Task",null,new AjaxOptions() { HttpMethod="Get", LoadingElementId="loading",LoadingElementDuration=300, UpdateTargetId="form",InsertionMode=InsertionMode.InsertAfter}, new { @class = "btn btn-primary" })
+    @Ajax.ActionLink("Yeni Görev Ekle", "NewTask", "Task", null, new AjaxOptions() { HttpMethod = "Get", LoadingElementId = "loading", LoadingElementDuration = 300, UpdateTargetId = "form", InsertionMode = InsertionMode.InsertAfter }, new { @class = "btn btn-primary" })
 </div>
 <br />
 
-    <div id="form" class="form">
-        <div id="loading" class="alert-warning" style="display:none">Yükleniyor...</div>
+<div id="form" class="form">
+    <div id="loading" class="alert-warning" style="display:none">Yükleniyor...</div>
 
-    </div>
+</div>
 
 
 
@@ -78,61 +78,11 @@
                         </td>
                     </tr>
                 }
-
-    <div class="row">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Tamamlandı Mı?</th>
-                    <th>Görev</th>
-                    <th>Oluşturulma Tarihi</th>
-                    <th>Bitirme Tarihi</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="list">
-                @if (Model.Count != 0)
-                {
-                    foreach (var item in Model)
-                    {
-                        <tr>
-
-                            <td><input type="checkbox" name="IsCompleted" checked="@item.IsComleted" /> </td>
-                            <td>@item.Text</td>
-                            <td>@item.CreatedOn.Value.ToShortDateString()</td>
-                            @if (item.DueDate == null)
-                            {
-                                <td>Görev henüz tamamlanmadı.</td>
-                            }
-                            else
-                            {
-                                <td>@item.DueDate.Value.ToShortDateString()</td>
-
-                        @Html.ActionLink("Delete", "Delete","Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs",onclick="return confirm('Gerçekten Silmek İstiyor Musunuz?')"})
-                    </td>
-                </tr>
-                            }
-                            <td>
-                                @Html.ActionLink("Düzenle", "Edit", "Task", new { id = item.ID }, new { @class = "btn btn-success btn-xs" }) |
+            }
+        }
 
 
 
-                                @Html.ActionLink("Delete", "Delete", "Task", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
-                            </td>
-                        </tr>
+    </tbody>
+</table>
 
-                    }
-
-                }
-
-                else
-                {
-                    <tr>
-                        <td>Şuanda herhangi bir göreviniz yok.</td>
-                    </tr>
-                }
-
-
-            </tbody>
-        </table>
-    </div>

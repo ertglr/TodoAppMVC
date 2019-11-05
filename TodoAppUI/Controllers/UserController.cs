@@ -115,7 +115,7 @@ namespace TodoAppUI.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Index(Task task)
+        public ActionResult Index(Task task)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace TodoAppUI.Controllers
                 db.Tasks.Add(task);
                 if (db.SaveChanges()>0)
                 {
-                    return PartialView("_NewTaskPartialView");
+                    return PartialView("_NewTaskPartialView",task);
                 }
                 
                 
@@ -140,6 +140,12 @@ namespace TodoAppUI.Controllers
             }
         }
 
+
+        public ActionResult SıgnOut()
+        {
+            Session["user"] = null;
+            return RedirectToAction("Index", "Home");
+        }
 
 
 

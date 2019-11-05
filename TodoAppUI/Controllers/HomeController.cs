@@ -20,7 +20,10 @@ namespace TodoAppUI.Controllers
         public ActionResult Error()
         {
             if (TempData["error"] == null)
+            {
                 return RedirectToAction("Index");
+
+            }
 
             Exception exception = TempData["error"] as Exception;
             return View(exception);

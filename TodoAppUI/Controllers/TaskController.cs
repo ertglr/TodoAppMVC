@@ -20,7 +20,7 @@ namespace TodoAppUI.Controllers
             System.Threading.Thread.Sleep(1500);
             return PartialView("_PostingTaskPartialView", new Task());
         }
-        [HttpPost] //todo:ajax.beginformdan gelecek veri için düzenleme yapılacak..
+        [HttpPost] 
         public ActionResult NewTask(Task task)
         {
             try
@@ -33,7 +33,7 @@ namespace TodoAppUI.Controllers
                 db.Tasks.Add(task);
                 if (db.SaveChanges() > 0)
                 {
-                    return RedirectToAction("Index", "User");
+                    return RedirectToAction("Index","User");
                 }
 
                 return View(task);

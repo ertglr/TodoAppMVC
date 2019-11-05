@@ -182,6 +182,7 @@
     <Content Include="Views\Task\Edit.cshtml" />
     <Content Include="Views\Shared\_PostingTaskPartialView.cshtml" />
     <Content Include="Views\Shared\_NewTaskPartialView.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,6 @@
 ﻿@model TodoApp.ENTITIES.EntityClass.Task
+
+
     <tr>
         <td><input type="checkbox" name="IsComleted" checked="@Model.IsComleted" /></td>
         <td>@Model.Text</td>
@@ -18,3 +20,4 @@
             @Html.ActionLink("Delete", "Delete", "Task", new { id = Model.ID }, new { @class = "btn btn-danger btn-xs" })
         </td>
     </tr>
+

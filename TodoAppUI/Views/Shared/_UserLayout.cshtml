@@ -23,21 +23,8 @@
             </div>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
-                    @if (Session["user"] != null)
-                    {
-                        var user = Session["user"] as TodoApp.ENTITIES.EntityClass.User;
-                        var userName = user.Firstname + " " + user.Lastname;
-                        <li class="nav-item">@Html.ActionLink("" + userName, "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Çıkış Yap", "SıgnOut", "User", new { area = "" }, new { @class = "nav-link" })</li>
-
-
-                    }
-                    else
-                    {
-                        <li class="nav-item">@Html.ActionLink("Giriş Yap", "Login", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Kayıt Ol", "Register", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-
+                    <li class="nav-item">@Html.ActionLink("Giriş Yap", "Login", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Kayıt Ol", "Register", "User", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>
