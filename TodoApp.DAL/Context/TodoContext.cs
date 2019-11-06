@@ -11,11 +11,16 @@ namespace TodoApp.DAL.Context
 {
     public class TodoContext : DbContext
     {
-
-        public TodoContext()
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer(new TodoInitializer());
+            Database.SetInitializer<TodoContext>(null);
+
+            base.OnModelCreating(modelBuilder);
         }
+        //public TodoContext()
+        //{
+        //    Database.SetInitializer(new TodoInitializer());
+        //}
 
         public DbSet<User> Users { get; set; }
         public DbSet<History> Histories { get; set; }

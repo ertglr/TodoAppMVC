@@ -13,7 +13,7 @@ namespace TodoApp.DAL.Initializer
     {
         protected override void Seed(TodoContext context)
         {
-            TodoContext db = new TodoContext();
+            //TodoContext db = new TodoContext();
 
 
             List<User> users = new List<User>()
